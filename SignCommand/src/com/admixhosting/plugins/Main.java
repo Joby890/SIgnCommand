@@ -21,9 +21,7 @@ public class Main extends JavaPlugin implements Listener {
 			if (e.getClickedBlock().getType() == Material.SIGN || e.getClickedBlock().getType() == Material.WALL_SIGN || e.getClickedBlock().getType() == Material.SIGN_POST) {
 				Sign s = (Sign) e.getClickedBlock().getState();
 				if(s.getLine(0).equalsIgnoreCase("[command]")) {
-					if(e.getPlayer().hasPermission(s.getLine(1))) {
-						e.getPlayer().performCommand(s.getLine(1));
-					}
+					e.getPlayer().performCommand(s.getLine(1));
 				}
 			}
 		}
@@ -31,8 +29,10 @@ public class Main extends JavaPlugin implements Listener {
 	@EventHandler
 	public void OnSignPlace(SignChangeEvent e) {
 		if (e.getLine(0).equalsIgnoreCase("[command]")) {
-			if (!e.getPlayer().hasPermission("signcommand.create")|| !e.getPlayer().isOp()) {
+			if (!e.getPlayer().hasPermission("signcommand.create")|| !(e.getPlayer().isOp())) {
 				e.setCancelled(true);
+			} else {
+				e.getPlayer().sendMessage("SignCommand Created!");
 			}
 			
 		}
